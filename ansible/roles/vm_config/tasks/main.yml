@@ -1,0 +1,26 @@
+- name: update cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    lock_timeout: 300
+
+- name: install packages
+  ansible.builtin.apt:
+    name:
+      - curl
+      - qemu-guest-agent
+    state: present
+    lock_timeout: 300
+
+- name: enable qemu guest agent
+  ansible.builtin.systemd_service:
+    name: qemu-guest-agent
+    enabled: true
+    state: started
+
+- name: Configure resolv.conf to use upstream DNS
+  ansible.builtin.file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+    force: true

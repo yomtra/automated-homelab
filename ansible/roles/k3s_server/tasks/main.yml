@@ -1,0 +1,36 @@
+- name: check if k3s exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s
+  register: k3s_service
+
+- name: download k3s install script
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/install-k3s.sh
+    mode: '0755'
+  when: not k3s_service.stat.exists
+
+- name: run install script
+  ansible.builtin.command: /tmp/install-k3s.sh
+  environment:
+    INSTALL_K3S_EXEC: "server --resolv-conf=/run/systemd/resolve/resolv.conf"
+  register: install_result
+  when: not k3s_service.stat.exists
+  
+- name: enable k3s
+  ansible.builtin.systemd_service:
+    name: k3s
+    enabled: true
+    state: started
+
+- name: wait for port 6443 to become open
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: 6443
+    delay: 5
+    timeout: 120
+
+- name: verification
+  ansible.builtin.command: k3s kubectl get nodes
+  register: nodes_result
+  changed_when: false

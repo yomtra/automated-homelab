@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  registry: ghcr.io
+  repository: headlamp-k8s/headlamp
+  tag: latest
+  pullPolicy: Always
+
+serviceAccount:
+  create: true
+  name: headlamp-admin
+
+clusterRoleBinding:
+  create: true
+  clusterRoleName: cluster-admin
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - host: headlamp.homelab
+      paths:
+        - path: /
+          type: Prefix

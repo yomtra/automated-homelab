@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: headlamp
+  namespace: argocd
+
+spec:
+  project: default
+
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/headlamp/
+      chart: headlamp
+      targetRevision: 0.44.0
+
+      helm:
+        releaseName: headlamp
+        valueFiles:
+          - $values/kubernetes/headlamp/values.yml
+
+    - repoURL: git@github.com:yomtra/automated-homelab.git
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: headlamp
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true

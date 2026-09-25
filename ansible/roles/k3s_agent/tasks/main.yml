@@ -1,0 +1,32 @@
+- name: check if k3s exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s
+  register: k3s_service
+
+- name: fetch token from control node
+  ansible.builtin.command:
+    cmd: cat /var/lib/rancher/k3s/server/node-token
+  delegate_to: "{{ groups['k3s_server'][0] }}"
+  register: k3s_token
+  when: not k3s_service.stat.exists
+
+- name: download k3s install script
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/install-k3s.sh
+    mode: '0755'
+  when: not k3s_service.stat.exists
+
+- name: run install script
+  ansible.builtin.command: /tmp/install-k3s.sh
+  environment:
+    K3S_URL: "https://{{ groups['k3s_server'][0] }}:6443"
+    K3S_TOKEN: "{{ k3s_token.stdout }}"
+    INSTALL_K3S_EXEC: "agent --resolv-conf=/run/systemd/resolve/resolv.conf"
+  when: not k3s_service.stat.exists
+
+- name: verification
+  ansible.builtin.command: k3s kubectl get nodes
+  delegate_to: "{{ groups['k3s_server'][0] }}"
+  register: nodes_result
+  changed_when: false

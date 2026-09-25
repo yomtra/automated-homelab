@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: pihole/pihole
+  tag: latest
+  pullPolicy: Always
+
+serviceDns:
+  type: LoadBalancer
+
+serviceDhcp:
+  enabled: false
+
+serviceWeb:
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - pihole.homelab
+
+persistentVolumeClaim:
+  enabled: false
+
+extraEnvVars:
+  TZ: America/Chicago
+  FTLCONF_dns_listeningMode: all
+

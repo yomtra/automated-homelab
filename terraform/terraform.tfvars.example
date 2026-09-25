@@ -1,0 +1,46 @@
+proxmox_endpoint     = "https://10.0.0.10:8006/"
+terraform_api_token  = "terraform@pve!terraform-token=xxxxxxxxxx"
+proxmox_insecure     = true
+
+proxmox_node_name        = "pve"
+template_name            = "ubuntu-2404-cloud-template"
+template_vm_id           = 9000
+datastore_id             = "local-lvm"
+download_datastore_id    = "local"
+template_disk_size       = 20
+template_memory_mb       = 2048
+template_cpu_cores       = 2
+template_machine_type    = "q35"
+template_bios_type       = "ovmf"
+template_efi_disk_type   = "4m"
+template_disk_interface  = "scsi0"
+template_scsi_hardware   = "virtio-scsi-pci"
+network_bridge           = "vmbr0"
+template_network_model   = "virtio"
+vm_network_model         = "virtio"
+template_image_file_name = "noble-server-cloudimg-amd64.qcow2"
+vm_image_url             = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
+ipv4_gateway             = "10.0.0.1"
+dns_servers              = ["1.1.1.1", "8.8.8.8"]
+cloud_init_user          = "ubuntu"
+ssh_public_key_path      = "~/.ssh/homelab_ed25519.pub"
+
+vms = {
+  k3s-control = {
+    vm_id        = 101
+    name         = "k3s-control"
+    role = "control"
+    cpu_cores    = 2
+    memory_mb    = 2046
+    ipv4_address = "10.0.0.51/24"
+  }
+
+  k3s-worker = {
+    vm_id        = 102
+    name         = "k3s-worker"
+    role = "worker"
+    cpu_cores    = 2
+    memory_mb    = 2046
+    ipv4_address = "10.0.0.52/24"
+  }
+}
