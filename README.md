@@ -24,7 +24,7 @@ Argo CD then takes over application deployment.
 | **Helm** | Used by Argo CD to deploy application charts |
 
 
-![alt text](image.png)
+<img width="726" height="1109" alt="image" src="https://github.com/user-attachments/assets/d3b89732-08a0-42c0-b5ad-129ab99fc1e4" />
 
 ## Prerequisites
 
