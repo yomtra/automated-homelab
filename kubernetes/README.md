@@ -19,8 +19,7 @@ Headlamp provides a GUI for viewing and managing the cluster.
 Exposed through Traefik at: `http://headlamp.homelab`
 
 
-![alt text](headlamp1.png)
-
+<img width="1655" height="792" alt="image" src="https://github.com/user-attachments/assets/27fc9781-7ff0-4177-a026-6355dad61f74" />
 
 To access the UI, generate a token
 ```
@@ -32,7 +31,8 @@ Pi-hole acts as a DNS service, blocking ads and malicious domains.
 
 Its DNS service is exposed from the cluster while the web interface is accessed through Traefik at: `http://pihole.homelab`
 
-![alt text](image.png)
+<img width="1228" height="430" alt="image" src="https://github.com/user-attachments/assets/6f2a5d48-38a6-4bd9-bc09-29ca7f7fc72c" />
+
 
 To get the password for the web ui:
 ```
