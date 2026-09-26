@@ -1,6 +1,6 @@
 # Automated Homelab
 
-The goal of this project was to automate the creation of a homelab instead of configuring everything manually. Terraform provisions the virtual machines on proxmox, ansible configure the virtual machines and creates the k3s cluster, and ArgoCD deploys and manages the applications through GitOps. 
+The goal of this project was to automate the creation of a homelab instead of configuring everything manually. **Terraform** provisions the virtual machines on **Proxmox**, **Ansible** configure the virtual machines and creates the **Kubernetes** cluster, and **ArgoCD** deploys and manages the applications through **GitOps**. 
 
 
 The project is deployed through `scripts/bootstrap.sh`.
